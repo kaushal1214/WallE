@@ -5,7 +5,13 @@
 			Project~ Wall-E
 		</title>
 		<style>
-		      img {
+		      	body  {
+ 				    background: url("/public/img/robot.jpg");
+    background-repeat: repeat;
+    background-size: auto;
+	
+				}
+			img {
 				 height: 100px;
                                  width: 100px;
                            }
@@ -15,14 +21,14 @@
 				
 			
 		    </style>
-		<link
-		href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/
+                  <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/
 		bootstrap.min.css" rel="stylesheet"></link>
-		<link href="/public/css/bootstrap.min.css" rel="stylesheet"></link>
+		<link 	rel="stylesheet" 
+href="/public/css/bootstrap.min.css"></link>
 		<link rel="icon" href="/favicon.ico" />
 	</head>
 	
-	<body>
+	<body bgcolor="#000">
 		<br/>
 		<br/>
 		<div class="text-center">
@@ -35,23 +41,12 @@
 
 		$(function(){
 			var socket = io();
-			socket.on('State Changed', function(msg){
-				var state = msg.state;
-				if(state=='Lost')
-				{
-					$('#'+msg.id).text(msg.state);
-					document.getElementById(msg.id).style.color="red";
-				}
-				else
-				{
-					$('#'+msg.id).text(msg.state);
-					document.getElementById(msg.id).style.color = "green";
-				}
-				
-			});
+			var data = document.getElementById("message");
+			document.getElementById("sendButton").onclick = function(){ 
+				socket.emit("Message",{data:data.value});
+				document.getElementById("message").value = '';
+			};
 		});
-
-
 		</script>
 
 		<div class="container">
@@ -61,18 +56,14 @@
 		       <h3>Control Panel</h3>
 		     </div>
                      <div class="panel-body text-center">
-			<iframe frameborder="1" width="420" height="345" src="https://www.youtube.com/watch?v=y_bHQD9wOy4"></iframe> 
-			<form method="post" action="/message" ectype="x-www-form-urlencoded">
-		         <div class="panel-body form-horizontal">
-			  <div class="form-group">
-				 <textarea rows="2" cols="40" maxlength="50" name= "message"placeholder="Enter your Message"></textarea> 
-		          </div>
-		          <div class="form-group col-md-12 text-center">
-			   <button type="submit" id="openvotingLine" class="btn btn-success">Submit</button>
-			  </div>
-	                 </div>		
-			</form>
-		     </div>
+			<iframe frameborder="1" width="420" height="345" src=""></iframe>
+			</br>
+			<input type="text" style="font-size:20px;" name="message" id="message" placeholder="Enter your message"/>
+			</br>
+			</br>
+			<button type="button" id="sendButton" style="font-size:20px;" class="btn 
+btn-success">Send</button>
+		    </div>
                    </div>
 		  </div>
 		</div>
@@ -90,12 +81,6 @@
 				</div>
 			</div>
 		</div>
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/
-			1.11.0/jquery.min.js">
-		</script>
-		<script type="text/javascript"
-			src="/public/js/scripts.js">
-		</script>
 	</body>
 </html>
 				
