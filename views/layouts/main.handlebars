@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<title>
+			Project~ Wall-E
+		</title>
+		<style>
+		      img {
+				 height: 100px;
+                                 width: 100px;
+                           }
+			label{	
+				color: #E74C3C;
+				}
+				
+			
+		    </style>
+		<link
+		href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/
+		bootstrap.min.css" rel="stylesheet"></link>
+		<link href="/public/css/bootstrap.min.css" rel="stylesheet"></link>
+		<link rel="icon" href="/favicon.ico" />
+	</head>
+	
+	<body>
+		<br/>
+		<br/>
+		<div class="text-center">
+			<img src="/public/img/WALLE.png" alt="image.png"/>
+			<h1><a href="/">Project ~ Wall-E</a></h1>
+		</div>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+		<script>
+
+		$(function(){
+			var socket = io();
+			socket.on('State Changed', function(msg){
+				var state = msg.state;
+				if(state=='Lost')
+				{
+					$('#'+msg.id).text(msg.state);
+					document.getElementById(msg.id).style.color="red";
+				}
+				else
+				{
+					$('#'+msg.id).text(msg.state);
+					document.getElementById(msg.id).style.color = "green";
+				}
+				
+			});
+		});
+
+
+		</script>
+
+		<div class="container">
+		  <div class="col-md-12">
+                   <div class="panel panel-success">
+		     <div class="panel-heading">
+		       <h3>Control Panel</h3>
+		     </div>
+                     <div class="panel-body text-center">
+			<iframe frameborder="1" width="420" height="345" src="https://www.youtube.com/watch?v=y_bHQD9wOy4"></iframe> 
+			<form method="post" action="/message" ectype="x-www-form-urlencoded">
+		         <div class="panel-body form-horizontal">
+			  <div class="form-group">
+				 <textarea rows="2" cols="40" maxlength="50" name= "message"placeholder="Enter your Message"></textarea> 
+		          </div>
+		          <div class="form-group col-md-12 text-center">
+			   <button type="submit" id="openvotingLine" class="btn btn-success">Submit</button>
+			  </div>
+	                 </div>		
+			</form>
+		     </div>
+                   </div>
+		  </div>
+		</div>
+		<br/>
+		<br/>
+		<div style="border-top: solid 1px #eee; padding-top:1em;">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-12 text-center">
+						<p class="text-muted">CDAC |&copy; All Rights Researved
+						</p>
+						<p class="text-center">
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/
+			1.11.0/jquery.min.js">
+		</script>
+		<script type="text/javascript"
+			src="/public/js/scripts.js">
+		</script>
+	</body>
+</html>
+				
+				
+
