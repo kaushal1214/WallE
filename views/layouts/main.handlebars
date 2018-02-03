@@ -5,30 +5,29 @@
 			Project~ Wall-E
 		</title>
 		<style>
-		      	body  {
- 				    background: url("/public/img/robot.jpg");
-    background-repeat: repeat;
-    background-size: auto;
-	
-				}
-			img {
-				 height: 100px;
-                                 width: 100px;
-                           }
-			label{	
-				color: #E74C3C;
-				}
+		body  {
+			background: url("/public/img/robot.jpg");
+			background-repeat: repeat;
+			background-size: auto;
+		      }
+
+		img   {
+			 height: 100px;
+                         width: 100px;
+                      }
+
+		label {	
+			color: #E74C3C;
+                      }
 				
 			
-		    </style>
-                  <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/
-		bootstrap.min.css" rel="stylesheet"></link>
-		<link 	rel="stylesheet" 
-href="/public/css/bootstrap.min.css"></link>
+		</style>
+                <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"></link>
+		<link rel="stylesheet" href="/public/css/bootstrap.min.css"></link>
 		<link rel="icon" href="/favicon.ico" />
 	</head>
 	
-	<body bgcolor="#000">
+	<body>
 		<br/>
 		<br/>
 		<div class="text-center">
@@ -38,9 +37,17 @@ href="/public/css/bootstrap.min.css"></link>
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 		<script>
-
-		$(function(){
+		$(function()
+		{
 			var socket = io();
+			$(document).on("keypress", function (e) {
+	                  // use e.which
+			  console.log(e.key);
+			if(e.key == "ArrowUp" || e.key=="ArrowDown" || e.key=="ArrowLeft" || e.key=="ArrowRight")
+			  socket.emit('keyPress',{key:e.key});
+	                });
+
+			
 			var data = document.getElementById("message");
 			document.getElementById("sendButton").onclick = function(){ 
 				socket.emit("Message",{data:data.value});

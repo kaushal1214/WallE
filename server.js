@@ -34,4 +34,8 @@ io.on('connection',function(client){
 	client.on('Message',function(data){
 		console.log(data.data);
 	});
+
+	client.on('keyPress', function(data){
+		console.log('The keypressed is: '+ data.key);
+	});
 });
