@@ -37,22 +37,32 @@
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 		<script>
+		
 		$(function()
 		{
 			var socket = io();
-			$(document).on("keypress", function (e) {
-	                  // use e.which
-			  console.log(e.key);
-			if(e.key == "ArrowUp" || e.key=="ArrowDown" || e.key=="ArrowLeft" || e.key=="ArrowRight")
-			  socket.emit('keyPress',{key:e.key});
+
+			//Keyrelease event
+			document.addEventListener('keyup',function(event){
+				console.log(event);
+				if(event.key=="ArrowUp"||event.key=="ArrowDown"||event.key=="ArrowLeft"||event.key=="ArrowRight")
+					socket.emit('keyUp',{key:event.key});
+					
+			});
+			$(document).on("keypress", function (e) 
+			{
+	                   if(e.key == "ArrowUp" || e.key=="ArrowDown" || e.key=="ArrowLeft" || e.key=="ArrowRight")
+			     socket.emit('keyPress',{key:e.key});
 	                });
 
+	
 			
 			var data = document.getElementById("message");
 			document.getElementById("sendButton").onclick = function(){ 
 				socket.emit("Message",{data:data.value});
 				document.getElementById("message").value = '';
 			};
+
 		});
 		</script>
 
@@ -63,13 +73,15 @@
 		       <h3>Control Panel</h3>
 		     </div>
                      <div class="panel-body text-center">
-			<iframe frameborder="1" width="420" height="345" src="http://10.208.42.70:8081"></iframe>
+			<iframe frameborder="1" width="420" height="345" src="http://10.208.42.116:8081"></iframe>
 			</br>
 			<input type="text" style="font-size:20px;" name="message" id="message" placeholder="Enter your message"/>
 			</br>
 			</br>
 			<button type="button" id="sendButton" style="font-size:20px;" class="btn 
 btn-success">Send</button>
+			</br>
+			<button type="button" id="rightButton"
 		    </div>
                    </div>
 		  </div>

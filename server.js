@@ -29,12 +29,13 @@ var LCD = require('lcd'),
 		row: 4
 	});
 
+//To detect if the LCD is ready to print
 var READY = false;
 
 lcd.on('ready',function(){
 	READY = true;
 	lcd.setCursor(0,0);
-	lcd.print("Helloasdasd",function(err){
+	lcd.print("",function(err){
 		if(err) throw err;
 	});
 });
@@ -45,6 +46,8 @@ app = config(app);
 http.listen(3300,function(){
 console.log('Server up and running at 3300 port');
 });
+
+//Socket.io connection
 io.on('connection',function(client){
 	client.on('Message',function(data){
 		console.log(data.data);
@@ -58,6 +61,16 @@ io.on('connection',function(client){
 		}
 	});
 
+	//To handle KeyUp event from the user
+	client.on('keyUp',function(data){
+		console.log("Keyup: "+data.key);
+
+		//To stop both motors
+		motor(0,0,0,0);
+
+	});
+
+	//To Handle KeyPress event from the Client
 	client.on('keyPress', function(data){
 		console.log('The keypressed is: '+ data.key);
 		if(data.key=="ArrowUp")
@@ -85,18 +98,16 @@ io.on('connection',function(client){
 	});
 });
 
-setInterval(function(){
-
-motor(0,0,0,0)},1000);
-
 function motor(m1A,m1B,m2A,m2B)
 {
 	motor1A.digitalWrite(m1A);
 	motor1B.digitalWrite(m1B);
-
 	motor2A.digitalWrite(m2A);
 	motor2B.digitalWrite(m2B);
 }
+
+
+//To handle the Interrupt 'Ctrl+C' and close the LCD gracefully
 process.on('SIGINT', function(){
 	console.log("Server is closed!");
 	lcd.close();
